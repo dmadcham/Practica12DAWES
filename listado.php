@@ -3,6 +3,26 @@
 // Iniciamos la sesión
 session_start();
 
+// Credenciales Base de Datos
+$dbserver = "localhost";
+// Usuario con los permisos limitados
+$dbuser = "admin12";
+$dbpass = "admin";
+$dbname = "u569805685_fm";
+
+// Conexion
+$conexion = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
+// Sentencia SQL
+$query = "SELECT nombre, precio FROM Mueble";
+// Preparamos la sentencia
+$resultset = $conexion->prepare($query);
+// Ejecutamos la sentencia
+$resultset->execute();
+$resultset->store_result();
+// Preparamos los resultados
+$resultset->bind_result($nombreMueble, $precioMueble);
+
+
 ?>
 
 <HTML>
@@ -61,10 +81,26 @@ session_start();
               <B>Precio</B>
             </TD>
           </TR>
-          <TR>
-            <TD>XX</TD>
-            <TD ALIGN='RIGHT'>XX</TD>
-          </TR>
+
+          <?php 
+          
+          if ($resultset->num_rows>0) {
+            while ($resultset->fetch()) {
+              echo "<tr>";
+              echo "<td>".$nombreMueble."</td>";
+              echo "<td align=right>".$precioMueble."</td>";
+              echo "</tr>";
+            }
+          } else {
+            echo "<TR>";
+            echo "<TD>XX</TD>";
+            echo "<TD ALIGN='RIGHT'>XX</TD>";
+            echo "</TR>";
+  
+          }
+          ?>
+
+          
         </TABLE>
       </TD>
     </TR>
