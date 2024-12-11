@@ -3,6 +3,30 @@
 // Iniciamos la sesión
 session_start();
 
+// Credenciales Base de Datos
+$dbserver = "localhost";
+// Usuario con los permisos limitados
+$dbuser = "admin12";
+$dbpass = "admin";
+$dbname = "u569805685_fm";
+
+// Datos recogidos del formulario
+$nombrePieza = $_POST["pieza"];
+
+// Conexion
+$conexion = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
+// Sentencia SQL
+$query = "SELECT unidades FROM Estante WHERE cod_pieza = (SELECT cod FROM Pieza WHERE nombre = ?)";
+// Preparamos la sentencia
+$resultset = $conexion->prepare($query);
+$resultset->bind_param("s", $nombrePieza);
+// Ejecutamos la sentencia
+$resultset->execute();
+$resultset->store_result();
+// Preparamos los resultados
+$resultset->bind_result($numPiezas);
+
+
 ?>
 
 <HTML>
@@ -51,7 +75,16 @@ session_start();
                     <H1>
                          Informaci&oacute;n de la pieza seleccionada
                     </H1>
-                    Hay XX unidades en almac&eacute;n de la pieza con nombre: XX.
+                    <?php
+                    
+                    // Comprobamos que haya resultados
+                    if ($resultset->num_rows>0) {
+                         $resultset->fetch();
+                         echo "Hay ".$numPiezas." unidades en almac&eacute;n de la pieza con nombre: ".$nombrePieza.".";
+                    }
+
+                    ?>
+                    
                     <BR>
                </TD>
           </TR>
