@@ -3,6 +3,13 @@
 // Iniciamos la sesión
 session_start();
 
+// Comprobamos que la sesión esté iniciada correctamente. 
+// En caso contrario, redirigimos a la página de inicio de sesión.
+if (!isset($_SESSION["user"])) {
+     header("Location: login.php");
+     exit();
+}
+
 ?>
 
 <HTML>

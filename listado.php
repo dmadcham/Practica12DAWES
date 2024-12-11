@@ -84,13 +84,16 @@ $resultset->bind_result($nombreMueble, $precioMueble);
 
           <?php 
           
+          // Comprobamos que haya resultados
           if ($resultset->num_rows>0) {
+            // Recorremos los resultados mostrando Nombre y Precio
             while ($resultset->fetch()) {
               echo "<tr>";
               echo "<td>".$nombreMueble."</td>";
               echo "<td align=right>".$precioMueble."</td>";
               echo "</tr>";
             }
+          // Si no hay resultados, mostramos Nombre: XX y Precio: XX
           } else {
             echo "<TR>";
             echo "<TD>XX</TD>";
@@ -98,6 +101,10 @@ $resultset->bind_result($nombreMueble, $precioMueble);
             echo "</TR>";
   
           }
+
+          // Libreramos los recursos
+          $resultset->close();
+          $conexion->close();
           ?>
 
           
