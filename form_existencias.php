@@ -10,6 +10,25 @@ if (!isset($_SESSION["user"])) {
      exit();
 }
 
+// Credenciales Base de Datos
+$dbserver = "localhost";
+// Usuario con los permisos limitados
+$dbuser = "admin12";
+$dbpass = "admin";
+$dbname = "u569805685_fm";
+
+// Conexion
+$conexion = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
+// Sentencia SQL
+$query = "SELECT nombre FROM Pieza";
+// Preparamos la sentencia
+$resultset = $conexion->prepare($query);
+// Ejecutamos la sentencia
+$resultset->execute();
+$resultset->store_result();
+// Preparamos los resultados
+$resultset->bind_result($nombrePieza);
+
 ?>
 
 <HTML>
@@ -43,16 +62,9 @@ if (!isset($_SESSION["user"])) {
                     <BR>
                     <BR>
                     <A HREF='login.php'>Acceso clientes</A>
-                    <?php
-
-                    // Comprobamos que la sesión esté iniciada para mostrar la opción "Cerrar Sesión".
-                    if (isset($_SESSION["user"])) {
-                         echo "<BR>\n 
-                              <BR>\n 
-                              <A HREF='logout.php'>Cerrar sesi&oacute;n</A>";
-                    }
-
-                    ?>
+                    <BR>
+                    <BR>
+                    <A HREF='logout.php'>Cerrar sesi&oacute;n</A>
                </TD>
                <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>
                     <H1>
@@ -71,6 +83,19 @@ if (!isset($_SESSION["user"])) {
                                    <TD>
                                         <SELECT NAME="pieza">
                                              <OPTION></OPTION>
+                                             <?php 
+                                             // Comprobamos que haya resultados
+                                             if ($resultset->num_rows>0) {
+                                                  // Recorremos los resultados mostrando las opciones del desplegable con el nombre de la pieza
+                                                  while ($resultset->fetch()) {
+                                                       echo "<option value=".$nombrePieza.">".$nombrePieza."</option>";
+                                                  }
+                                             }
+                                             // Liberamos los recursos
+                                             $resultset->close();
+                                             $conexion->close();
+                                             ?>
+                                             
                                         </SELECT>
                                    </TD>
                               </TR>
