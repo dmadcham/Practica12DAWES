@@ -60,7 +60,7 @@ if (isset($_SESSION["user"])) {
                 Contrase&ntilde;a:
               </TD>
               <TD>
-                <INPUT TYPE="TEXT" NAME="pass">
+                <INPUT TYPE="PASSWORD" NAME="pass">
               </TD>
             </TR>
             <TR>
