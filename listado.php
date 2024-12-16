@@ -52,18 +52,17 @@ $resultset->bind_result($nombreMueble, $precioMueble);
         <A HREF="listado.php">Productos</A>
         <BR>
         <BR>
-        <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
-        <BR>
-        <BR>
-        <A HREF='login.php'>Acceso clientes</A>
         <?php
 
-        // Comprobamos que la sesión esté iniciada para mostrar la opción "Cerrar Sesión".
+        // Comprobamos que la sesión esté iniciada para mostrar las opciones que dependen de la sesión.
         if (isset($_SESSION["user"])) {
-          echo "<BR>\n 
+          echo "<A HREF='form_existencias.php'>Disponibilidad de piezas</A>\n
+                <BR>\n 
                 <BR>\n 
                 <A HREF='logout.php'>Cerrar sesi&oacute;n</A>";
-     }
+        } else {
+          echo "<A HREF='login.php'>Acceso clientes</A>";
+        }
 
         ?>
       </TD>
@@ -82,24 +81,23 @@ $resultset->bind_result($nombreMueble, $precioMueble);
             </TD>
           </TR>
 
-          <?php 
-          
+          <?php
+
           // Comprobamos que haya resultados
-          if ($resultset->num_rows>0) {
+          if ($resultset->num_rows > 0) {
             // Recorremos los resultados mostrando Nombre y Precio
             while ($resultset->fetch()) {
               echo "<tr>";
-              echo "<td>".$nombreMueble."</td>";
-              echo "<td align=right>".$precioMueble."</td>";
+              echo "<td>" . $nombreMueble . "</td>";
+              echo "<td align=right>" . number_format($precioMueble, 2) . "€</td>";
               echo "</tr>";
             }
-          // Si no hay resultados, mostramos Nombre: XX y Precio: XX
+            // Si no hay resultados, mostramos Nombre: XX y Precio: XX
           } else {
             echo "<TR>";
             echo "<TD>XX</TD>";
             echo "<TD ALIGN='RIGHT'>XX</TD>";
             echo "</TR>";
-  
           }
 
           // Libreramos los recursos
@@ -107,7 +105,7 @@ $resultset->bind_result($nombreMueble, $precioMueble);
           $conexion->close();
           ?>
 
-          
+
         </TABLE>
       </TD>
     </TR>

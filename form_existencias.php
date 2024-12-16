@@ -61,9 +61,6 @@ $resultset->bind_result($nombrePieza);
                     <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
                     <BR>
                     <BR>
-                    <A HREF='login.php'>Acceso clientes</A>
-                    <BR>
-                    <BR>
                     <A HREF='logout.php'>Cerrar sesi&oacute;n</A>
                </TD>
                <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>
@@ -83,19 +80,19 @@ $resultset->bind_result($nombrePieza);
                                    <TD>
                                         <SELECT NAME="pieza">
                                              <OPTION></OPTION>
-                                             <?php 
+                                             <?php
                                              // Comprobamos que haya resultados
-                                             if ($resultset->num_rows>0) {
+                                             if ($resultset->num_rows > 0) {
                                                   // Recorremos los resultados mostrando las opciones del desplegable con el nombre de la pieza
                                                   while ($resultset->fetch()) {
-                                                       echo "<option value=".$nombrePieza.">".$nombrePieza."</option>";
+                                                       echo "<option>" . $nombrePieza . "</option>";
                                                   }
                                              }
                                              // Liberamos los recursos
                                              $resultset->close();
                                              $conexion->close();
                                              ?>
-                                             
+
                                         </SELECT>
                                    </TD>
                               </TR>

@@ -42,9 +42,6 @@ if (!isset($_SESSION["user"])) {
                     <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
                     <BR>
                     <BR>
-                    <A HREF='login.php'>Acceso clientes</A>
-                    <BR>
-                    <BR>
                     <A HREF='logout.php'>Cerrar sesi&oacute;n</A>
                </TD>
                <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>

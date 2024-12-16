@@ -39,20 +39,7 @@ if (isset($_SESSION["user"])) {
         <A HREF="listado.php">Productos</A>
         <BR>
         <BR>
-        <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
-        <BR>
-        <BR>
         <A HREF='login.php'>Acceso clientes</A>
-        <?php
-
-        // Comprobamos que la sesión esté iniciada para mostrar la opción "Cerrar Sesión".
-        if (isset($_SESSION["user"])) {
-          echo "<BR>\n 
-                <BR>\n 
-                <A HREF='logout.php'>Cerrar sesi&oacute;n</A>";
-        }
-
-        ?>
       </TD>
       <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>
         <H1>Identif&iacute;quese

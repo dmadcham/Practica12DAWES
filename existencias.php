@@ -3,6 +3,13 @@
 // Iniciamos la sesión
 session_start();
 
+// Comprobamos que la sesión esté iniciada correctamente. 
+// En caso contrario, redirigimos a la página de inicio de sesión.
+if (!isset($_SESSION["user"])) {
+     header("Location: login.php");
+     exit();
+}
+
 // Credenciales Base de Datos
 $dbserver = "localhost";
 // Usuario con los permisos limitados
@@ -11,12 +18,18 @@ $dbpass = "admin";
 $dbname = "u569805685_fm";
 
 // Datos recogidos del formulario
-$nombrePieza = $_POST["pieza"];
+$nombrePieza = $_POST['pieza'];
+
+// Comprobamos que el formulario no esté vacío
+// Si el formulario está vacío, vuelve a la página del formulario
+if (empty($nombrePieza)) {
+     header("Location: form_existencias.php");
+}
 
 // Conexion
 $conexion = new mysqli($dbserver, $dbuser, $dbpass, $dbname);
-// Sentencia SQL
-$query = "SELECT unidades FROM Estante WHERE cod_pieza = (SELECT cod FROM Pieza WHERE nombre = ?)";
+// Sentencia SQL para el codigo de la pieza
+$query = "SELECT SUM(unidades) FROM Estante WHERE cod_pieza = (SELECT cod FROM Pieza WHERE nombre = ?)";
 // Preparamos la sentencia
 $resultset = $conexion->prepare($query);
 $resultset->bind_param("s", $nombrePieza);
@@ -24,7 +37,8 @@ $resultset->bind_param("s", $nombrePieza);
 $resultset->execute();
 $resultset->store_result();
 // Preparamos los resultados
-$resultset->bind_result($numPiezas);
+$resultset->bind_result($numeroPiezas);
+
 
 
 ?>
@@ -59,32 +73,28 @@ $resultset->bind_result($numPiezas);
                     <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
                     <BR>
                     <BR>
-                    <A HREF='login.php'>Acceso clientes</A>
-                    <?php
-
-                    // Comprobamos que la sesión esté iniciada para mostrar la opción "Cerrar Sesión".
-                    if (isset($_SESSION["user"])) {
-                         echo "<BR>\n 
-                              <BR>\n 
-                              <A HREF='logout.php'>Cerrar sesi&oacute;n</A>";
-                    }
-
-                    ?>
+                    <A HREF='logout.php'>Cerrar sesi&oacute;n</A>
                </TD>
                <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>
                     <H1>
                          Informaci&oacute;n de la pieza seleccionada
                     </H1>
                     <?php
-                    
-                    // Comprobamos que haya resultados
-                    if ($resultset->num_rows>0) {
-                         $resultset->fetch();
-                         echo "Hay ".$numPiezas." unidades en almac&eacute;n de la pieza con nombre: ".$nombrePieza.".";
+                    if ($resultset->fetch()) {
+                         if ($numeroPiezas>0) {
+                              echo "Hay " . $numeroPiezas . " unidades en almacén de la pieza con nombre: " . $nombrePieza . ".";
+                         }else {
+                         echo "No hay ninguna unidad en el almacén de la pieza con nombre: " . $nombrePieza . ".";
+                         }
+                    } else {
+                         echo "No hay información para la pieza con nombre: " . $nombrePieza . ".";
                     }
 
+                    // Libreramos los recursos
+                    $resultset->close();
+                    $conexion->close();
                     ?>
-                    
+
                     <BR>
                </TD>
           </TR>

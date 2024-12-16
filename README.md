@@ -55,3 +55,14 @@ Las tareas a realizar son:
 
 
 Enviad la práctica resuelta a gs.trabajos@gmail.com con asunto "DAW - DAWES - Práctica 12 - Gestión de almacén".
+
+## Registro
+
+- Usuarios hecho
+    - php de verificación
+    - Página de bienvenida
+    - Todos los menús adaptados según la sesión
+    - Redireccionamiento según la sesión en las páginas necesarias
+
+- Listado terminado
+    - 

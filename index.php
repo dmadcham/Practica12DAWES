@@ -32,21 +32,20 @@ session_start();
                     <A HREF="listado.php">Productos</A>
                     <BR>
                     <BR>
-                    <A HREF='form_existencias.php'>Disponibilidad de piezas</A>
-                    <BR>
-                    <BR>
-                    <A HREF='login.php'>Acceso clientes</A>
+
                     <?php
 
-                    // Comprobamos que la sesión esté iniciada para mostrar la opción "Cerrar Sesión".
+                    // Comprobamos que la sesión esté iniciada para mostrar las opciones que dependen de la sesión.
                     if (isset($_SESSION["user"])) {
-                         echo "<BR>\n 
+                         echo "<A HREF='form_existencias.php'>Disponibilidad de piezas</A>\n
+                              <BR>\n 
                               <BR>\n 
                               <A HREF='logout.php'>Cerrar sesi&oacute;n</A>";
+                    } else {
+                         echo "<A HREF='login.php'>Acceso clientes</A>";
                     }
 
                     ?>
-
                </TD>
                <TD WIDTH=85% ALIGN=CENTER VALIGN=CENTER>
                     <H1>
