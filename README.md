@@ -65,4 +65,15 @@ Enviad la práctica resuelta a gs.trabajos@gmail.com con asunto "DAW - DAWES - P
     - Redireccionamiento según la sesión en las páginas necesarias
 
 - Listado terminado
-    - 
+    - Listado generado desde la base de datos
+
+- Existencias 
+    - Acceso limitado a usuarios verificados
+    - Opciones del formulario generadas desde la base de datos
+    - Informacioón de las existenicas generada desde la base de datos
+
+- Aplicación desplegada en local. [Acceder a la aplicación](http://192.168.4.95/)
+
+- Plan de pruebas pasado.
+    - Correcciones necesarias hechas:
+        - Manejo de envios falsos al formulario de existencias.
